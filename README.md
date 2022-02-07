@@ -1,3 +1,53 @@
+# AWS Solutions Architecture Certification
+
+## Re-certification
+
+I certified in 2019, have to re-certify in 2022.
+
+That is at least 3 reInvent's..
+
+*Things have changed*
+
+
+## What I've used
+
+ * [O'Reilly  - AWS Certified Solution Architect video series](https://learning.oreilly.com/videos/aws-certified-solutions/9780136721246/)
+ * [O'Reilly - AWS Certifed Solution architect offical study guide](https://learning.oreilly.com/library/view/aws-certified-solutions/9781119713081/)
+ * [Udemy Solution architecture certification Exam Questions]()
+ * Pearson Exam study guide
+
+![BookImage](./AWS_SolnArchBookPic.jpeg)
+
+## Exam Structure
+
+
+ * Domain 1: Design Resilient Architectures - 30%
+ * Domain 2: Design High‐Performing Architectures - 28%
+ * Domain 3: Design Secure Applications and Architectures - 24%
+ * Design Cost‐Optimized Architectures - 18%
+
+## Part 1 - Core AWS Services
+
+### Chapter 1 - Introduction to Cloud Computing and AWS
+### Chapter 2 - Amazon Elastic Compute Cloud and Amazon Elastic Block Store
+### Chapter 3 - AWS Storage
+### Chapter 4 - AWS Virtual Private Cloud
+### Chapter 5 - Database Services
+### Chapter 6 - Authentication and Authorization
+### Chapter 7 - Cloudtrail, Cloudwatch , AWS Config
+### Chapter 8 - The Domain Name System and Network Routing: Amazon Route 53 and Amazon CloudFront
+### Chapter 9 - Simple Queue Service and Kinesis
+
+
+## Part 2 - Well Architected Framework
+
+### Chapter 10 - Reliabiltiy Pillar
+### Chapter 11 - Performance Efficiecy Pillar
+### Chapter 12 - Security Pillar
+### Chapter 13 - Cost Optimization Pillar
+### Chapter 14 - Operational Excellence Pillar
+
+
 ## Storage Questions
 
 Ways differ from block / object storage?
