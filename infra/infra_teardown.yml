@@ -1,0 +1,102 @@
+---
+# AWS tasks are run 'locally'
+
+# Authentication details should be passed in as arguments or exported in the shell before running this playbook
+# Ideally they should be stored in Hashicorp's 'Vault'
+# e.g.
+# export AWS_ACCESS_KEY_ID='my-access-key123'
+# export AWS_SECRET_ACCESS_KEY='sekrit23418'
+#
+# Run with `ansible-playbook -i testing infra.yml`
+
+## Create a VPC - non default
+- name: CREATE AWS ENVIRONMENT
+  hosts: localhost
+  connection: local
+  gather_facts: False
+
+  tasks:
+    - name: Find VPC
+      ec2_vpc_net_facts:
+          region: "{{ aws_region }}"
+          filters:
+            "tag:Name": vpc-{{ domain_name }}
+      register: vpc_facts
+
+## Delete NAT Gateways
+
+    - name: Find NAT GATEWAY
+      ec2_vpc_nat_gateway_facts:
+        region: "{{ aws_region }}"
+        filters:
+          vpc-id: "{{ vpc_facts.vpcs[0].id}}"
+      register: all_ngws
+
+
+    - name: Delete NAT Gateway
+      ec2_vpc_nat_gateway:
+        state: absent
+        region: "{{ aws_region }}"
+        wait: yes
+        nat_gateway_id: "{{ item.nat_gateway_id }}"
+        release_eip: yes
+      register: delete_nat_gateway_result
+      with_items: "{{ all_ngws.result }}"
+
+
+
+## Delete Route tables
+
+    - name: Find route tables in VPC
+      ec2_vpc_route_table_facts:
+       region: "{{ aws_region }}"
+       filters:
+          vpc-id: "{{ vpc_facts.vpcs[0].id }}"
+          "tag:context": "{{ context }}"
+          #association.main: "false"
+
+      register: route_table_facts
+
+    - name: Delete route tables ec2_vpc_route_table
+      ec2_vpc_route_table:
+        region: "{{ aws_region }}"
+        state: absent
+        vpc_id: "{{ vpc_facts.vpcs[0].id }}"
+        lookup: id
+        route_table_id: "{{ item.id }}"
+      with_items: "{{ route_table_facts.route_tables }}"
+
+## Delete IGW
+
+    - name: Delete IGW ec2_vpc_igw
+      ec2_vpc_igw:
+        vpc_id: "{{ vpc_facts.vpcs[0].id }}"
+        region: "{{ aws_region }}"
+        state: absent
+
+## Delete Subnets
+
+    - name: Get all subnets for VPC
+      ec2_vpc_subnet_facts:
+        region: "{{ aws_region }}"
+        filters:
+          vpc-id: "{{ vpc_facts.vpcs[0].id }}"
+      register: subnet_facts
+
+    - name: Delete subnets ec2_vpc_subnet
+      ec2_vpc_subnet:
+        state: absent
+        vpc_id: "{{ vpc_facts.vpcs[0].id }}"
+        region: "{{ aws_region }}"
+        cidr: "{{ item.cidr_block}}"
+      with_items: "{{ subnet_facts.subnets }}"
+
+   # ec2_vpc_subnet, ec2_vpc_igw, and/or ec2_vpc_route_table
+
+    - name: Delete VPC and all resources
+      ec2_vpc_net:
+        state: absent
+        region: "{{ aws_region }}"
+        cidr_block: "{{ vpc_facts.vpcs[0].cidr_block }}"
+        purge_cidrs: yes
+        name: vpc-{{ domain_name }}
