@@ -48,6 +48,39 @@ That is at least 3 reInvent's..
 ### Chapter 14 - Operational Excellence Pillar
 
 
+## Practice Exams
+
+### Practice exam 1
+
+Cost Optimized architectures (50%)
+High Performing Architectues (52%)
+Resilient Architectures (69%)
+Secure Architectures (71%)
+
+#### Brush up areas:
+
+AWS Guard duty / Inspector
+
+**EC2 Compute**
+EC2 + File storage options
+EC2 Placement group types / tradeoffs
+AutoScaling groups - policy configuration options for scaling and state
+
+**Storage**
+S3 Storage tiering transfers / lifecycle policies, FsX new products
+EFS configuration options 
+Limits on Snowball techs, AWS Storage gateway
+S3 Transfer acceleratino / multipart upload 
+Storage relative costs
+Storage retention rules, exceptions
+
+**Scaling / Security products**
+SQS - Limits, Batch modes
+AWS WAF Features, rule policies
+AWS Global accelerator
+Lambda language options / support, limits on concurrency
+Kinesis -- Firehose, data streams choice
+
 ## Storage Questions
 
 Ways differ from block / object storage?
